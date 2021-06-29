@@ -22,6 +22,7 @@ const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology:
 client.connect(err => {
     console.log('connection err', err)
   const blogCollection = client.db("E-Fashion").collection("blogs");
+  const adminCollection = client.db("E-Fashion").collection("admin");
   // const adminCollection = client.db("E-Fashion").collection("admin");
 
   app.get('/blogs',(req, res) =>{
@@ -62,13 +63,13 @@ client.connect(err => {
   })
 
   //admin
-  // app.post('/isAdmin', (req,res) =>{
-  //   const email = req.body.email;
-  //   adminCollection.find({email: email})
-  //     .toArray((err, admin) =>{
-  //       res.send(admin.length > 0)
-  //     })
-  // })
+  app.post('/isAdmin', (req,res) =>{
+    const email = req.body.email;
+    adminCollection.find({email: email})
+      .toArray((err, admin) =>{
+        res.send(admin.length > 0)
+      })
+  })
 
 });
 
